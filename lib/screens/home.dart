@@ -11,6 +11,11 @@ import 'package:env_app/screens/leaderboard.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget{
+
+  Home({Key key, this.uid}) : super(key: key);
+
+  final String uid;
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -19,13 +24,18 @@ class Home extends StatefulWidget{
 class _HomeState extends State<Home>{
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  void initState() {
+    super.initState();
+    _pageOptions = [
+      PhotoPage(uid: widget.uid,),
+      Community(uid: widget.uid,),
+      Leaderboard(),
+      Profile(),
+    ];
+  }
+
   int _selectedTab = 0;
-  final _pageOptions = [
-    PhotoPage(),
-    Community(),
-    Leaderboard(),
-    Profile(),
-  ];
+  var _pageOptions;
 
   @override
   Widget build(BuildContext context) {

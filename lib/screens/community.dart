@@ -1,9 +1,18 @@
 import 'package:env_app/screens/vote.dart';
 import 'package:flutter/material.dart';
 
-class Community extends StatelessWidget {
+class Community extends StatefulWidget{
+
+  Community({Key key, this.uid}) : super(key: key);
+
+  final String uid;
+
+  @override
+  _CommunityState createState() => _CommunityState();
+}
 
 
+class _CommunityState extends State<Community>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +23,7 @@ class Community extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => VoteScreen()),
+                MaterialPageRoute(builder: (context) => VoteScreen(uid: widget.uid)),
               );
             },
           )
