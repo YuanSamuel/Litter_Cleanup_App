@@ -1,5 +1,13 @@
+import 'package:env_app/screens/community.dart';
 import 'package:flutter/material.dart';
 import 'package:env_app/widgets/home_drawer.dart';
+import 'package:env_app/screens/login.dart';
+import 'package:env_app/widgets/map_widget.dart';
+import 'package:env_app/screens/community.dart';
+import 'package:env_app/screens/profile.dart';
+import 'package:env_app/screens/leaderboard.dart';
+
+import 'login.dart';
 
 class Home extends StatefulWidget{
   @override
@@ -9,6 +17,14 @@ class Home extends StatefulWidget{
 
 class _HomeState extends State<Home>{
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  int _selectedTab = 0;
+  final _pageOptions = [
+    Map(),
+    Community(),
+    Leaderboard(),
+    Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,82 +42,44 @@ class _HomeState extends State<Home>{
               onPressed: () {},),
           ],
         ),
-        /*
-      drawer: Drawer(
-        child: Text('hello world'),
-      ),*/
-        body: SafeArea(
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                /*
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              ),*/
-                SizedBox(height: 10,),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(text: 'Flutter App, ', style: TextStyle(fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.pinkAccent)),
-                      ],
-                          style: TextStyle(fontSize: 32,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black)),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                  ],
-                ),
 
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text('Lorem Ipsum', style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),),
-                    ),
+      body: _pageOptions[_selectedTab],
 
-                    IconButton(
-                      icon: Icon(Icons.more_horiz, color: Colors.black,),
-                      onPressed: () {},),
-                  ],
-                ),
-
-                SizedBox(height: 10,),
-                SizedBox(height: 25,),
-
-//redo this to a bottom nav bar
-                /*
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(icon: Icon(Icons.home, color:Colors.black), onPressed: (){},),
-                    IconButton(icon: Icon(Icons.search, color:Colors.black), onPressed: (){},),
-                    IconButton(icon: Icon(Icons.favorite_border, color:Colors.black), onPressed: (){},),
-                    IconButton(icon: Icon(Icons.person_outline, color:Colors.black), onPressed: (){},),
-                  ],
-                ),
-              ),*/
-
-
-              ],
-            ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedTab,
+        onTap: (int index) {
+          setState(() {
+            _selectedTab = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            title: Text('Map'),
           ),
-        )
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            title: Text('Community'),
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.insert_chart),
+            title: Text('Leaderboard'),
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Profile'),
+          ),
+        ],
+
+      ),
+
+
+
+
 
     );
   }
