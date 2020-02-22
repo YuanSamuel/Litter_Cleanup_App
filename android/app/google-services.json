@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "338688179494",
+    "firebase_url": "https://inventathon-hack.firebaseio.com",
+    "project_id": "inventathon-hack",
+    "storage_bucket": "inventathon-hack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338688179494:android:1b1f8cfe8b450ded6d55e7",
+        "android_client_info": {
+          "package_name": "org.crhsidea.env_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338688179494-enuklt7v8oelvs8ere8ei8qsr4s19618.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSHaOlEMOrYJV7yvxePB0zt9u6N5h0nh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338688179494-enuklt7v8oelvs8ere8ei8qsr4s19618.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "338688179494-4cb1hfv6bh6oasb6m5ui1g2m7o8skbeb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.crhsidea.envApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
