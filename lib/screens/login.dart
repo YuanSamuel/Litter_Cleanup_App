@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         .then((DocumentSnapshot result) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Home()),
+                        MaterialPageRoute(builder: (context) => Home(uid: currentUser.user.uid,)),
                       );
                     }).catchError((err) => print(err)))
                 .catchError((err) => print(err));

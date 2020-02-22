@@ -1,15 +1,20 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:env_app/screens/fixPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PhotoPage extends StatefulWidget {
-  PhotoPage({Key key}) : super(key: key);
+
+  PhotoPage({Key key, this.uid}) : super(key: key);
+
+  String uid;
 
   @override
   _PhotoPageState createState() => _PhotoPageState();
@@ -42,7 +47,7 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
           )
         ],
-      ),*/
+      ),
     );
   }
 
@@ -50,6 +55,20 @@ class _PhotoPageState extends State<PhotoPage> {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
       await uploadFile(image);
+      int points = 0;
+      DocumentSnapshot snap = await Firestore.instance.collection('users').document(widget.uid).get();
+      print(widget.uid);
+      if (!snap.data.containsKey('points')) {
+        snap.data.putIfAbsent('points', () {
+          return 0;
+        });
+      }
+      else {
+        points = snap['points'];
+      }
+      Firestore.instance.collection('users').document(widget.uid).updateData({
+        'points': points + 5
+      });
     }
   }
 
@@ -60,7 +79,7 @@ class _PhotoPageState extends State<PhotoPage> {
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
     Firestore.instance.collection('entries').add({
-      'imageLink': await storageReference.getDownloadURL(),
+      'initial': await storageReference.getDownloadURL(),
       'votes': []
     });
     print('set');
