@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
 
 class PhotoPage extends StatefulWidget {
   PhotoPage({Key key}) : super(key: key);
@@ -21,9 +22,11 @@ class _PhotoPageState extends State<PhotoPage> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          FlatButton(
-            child: Text("Take Picture"),
-            onPressed: getImageFromCamera,
+          Center(
+            child: FlatButton(
+              child: Text("Take Picture"),
+              onPressed: getImageFromCamera,
+            ),
           )
         ],
       ),
@@ -38,8 +41,15 @@ class _PhotoPageState extends State<PhotoPage> {
   }
 
   Future uploadFile(File image) async {
-    StorageReference storageReference = FirebaseStorage.instance.ref();
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('photos/${basename(image.path)}');
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
+    Firestore.instance.collection('entries').add({
+      'imageLink': await storageReference.getDownloadURL(),
+      'votes': []
+    });
+    print('set');
   }
 }

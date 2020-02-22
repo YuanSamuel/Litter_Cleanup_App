@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:env_app/utilities/constants.dart';
 import 'package:env_app/screens/home.dart';
+import 'signupPage.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,6 +12,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
+  TextEditingController emailInputController;
+  TextEditingController passwordInputController;
+
+  initState() {
+    emailInputController = new TextEditingController();
+    passwordInputController = new TextEditingController();
+    super.initState();
+  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -25,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: emailInputController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -60,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: passwordInputController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -217,28 +229,28 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>RegisterPage()));
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Text(
+          'Sign Up',
+          style: TextStyle(
+            color: Color(0xFF527DAA),
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
         ),
       ),
     );
@@ -301,9 +313,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildForgotPasswordBtn(),
                       _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
-                      _buildSignInWithText(),
+                      //_buildSignInWithText(),
                       //_buildSocialBtnRow(),
-                      //_buildSignupBtn(),
+                      _buildSignupBtn(),
                     ],
                   ),
                 ),

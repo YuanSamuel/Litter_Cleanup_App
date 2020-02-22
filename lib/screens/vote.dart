@@ -8,49 +8,75 @@ class VoteScreen extends StatefulWidget {
 
 class _VoteScreenState extends State<VoteScreen> {
   DocumentSnapshot entry;
+  double vote = 5.0;
 
   void initState() {
     super.initState();
+    getEntry();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (entry == null) {
+      return CircularProgressIndicator();
+    }
     return Scaffold(
-      appBar: AppBar(
-        title: Text("hello"),
-      ),
-      body: FutureBuilder<void>(
-          future: getEntry(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return CircularProgressIndicator();
-            }
-            else {
-              return Column(
-                children: <Widget>[
-              Image(
-              image: Image.network(src),
+        appBar: AppBar(
+          title: Text("Vote!"),
+        ),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Image(
+                image: Image.network(entry.data["imageLink"]).image,
+              ),
             ),
-                ],
-              );
-            }
-      }),
-    );
+            Text(vote.round().toString()),
+            Slider(
+              value: vote,
+              min: 0,
+              max: 10,
+              label: "hi",
+              onChanged: (value) {
+                setState(() {
+                  vote = value;
+                });
+              },
+            ),
+            RaisedButton(
+              child: Text("Submit"),
+              onPressed: () {
+                submitVote();
+              }
+            )
+          ],
+        ));
   }
 
-  Future<DocumentSnapshot> getEntry() async {
-    Firestore.instance
-        .collection("entries")
-        .getDocuments()
-        .then((QuerySnapshot value) {
-      List<DocumentSnapshot> docs = value.documents;
-      for (DocumentSnapshot eachEntry in docs) {
-        if (eachEntry.data["votes"].length < 3) {
-          setState(() {
-            return eachEntry;
-          });
-        }
+  getEntry() async {
+    print('hi');
+    QuerySnapshot value =
+        await Firestore.instance.collection("entries").getDocuments();
+    List<DocumentSnapshot> docs = value.documents;
+    for (DocumentSnapshot eachEntry in docs) {
+      if (eachEntry.data["votes"].length < 3) {
+        print(eachEntry.data.toString());
+        setState(() {
+          entry = eachEntry;
+        });
+        break;
       }
+    }
+  }
+
+  submitVote() async {
+    DocumentReference value = await Firestore.instance.collection("entries").document(entry.documentID);
+    DocumentSnapshot snap = await value.get();
+    List newVotes = snap.data['votes'];
+    newVotes.add(vote.round());
+    value.setData({
+      "votes": newVotes
     });
   }
 }
