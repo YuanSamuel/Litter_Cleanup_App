@@ -39,59 +39,61 @@ class _HomeState extends State<Home>{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: _scaffoldKey,
-        drawer: MainDrawer(),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          automaticallyImplyLeading: false,
-          leading: IconButton(icon: Icon(Icons.menu, color: Colors.black),
-            onPressed: () => _scaffoldKey.currentState.openDrawer(),),
-          actions: <Widget>[
-            IconButton(icon: Icon(Icons.person_outline, color: Colors.black),
-              onPressed: () {},),
+    return SafeArea(
+      child: Scaffold(
+          key: _scaffoldKey,
+          drawer: MainDrawer(),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+            automaticallyImplyLeading: false,
+            leading: IconButton(icon: Icon(Icons.menu, color: Colors.black),
+              onPressed: () => _scaffoldKey.currentState.openDrawer(),),
+            actions: <Widget>[
+              IconButton(icon: Icon(Icons.person_outline, color: Colors.black),
+                onPressed: () {},),
+            ],
+          ),
+
+        body: _pageOptions[_selectedTab],
+
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _selectedTab,
+          onTap: (int index) {
+            setState(() {
+              _selectedTab = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              title: Text('Map'),
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people),
+              title: Text('Community'),
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.insert_chart),
+              title: Text('Leaderboard'),
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text('Profile'),
+            ),
           ],
+
         ),
 
-      body: _pageOptions[_selectedTab],
 
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedTab,
-        onTap: (int index) {
-          setState(() {
-            _selectedTab = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            title: Text('Map'),
-          ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Community'),
-          ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.insert_chart),
-            title: Text('Leaderboard'),
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
-          ),
-        ],
 
       ),
-
-
-
-
-
     );
   }
 }
