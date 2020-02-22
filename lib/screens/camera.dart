@@ -19,7 +19,20 @@ class _PhotoPageState extends State<PhotoPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
+    return Container(
+      height: 20,
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.camera),
+            onPressed: getImageFromCamera,
+          ),
+          IconButton(
+            icon: Icon(Icons.photo),
+          )
+        ],
+      ),
+      /*
       body: Column(
         children: <Widget>[
           Center(
@@ -29,7 +42,7 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
           )
         ],
-      ),
+      ),*/
     );
   }
 

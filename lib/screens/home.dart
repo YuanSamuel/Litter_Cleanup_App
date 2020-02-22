@@ -21,10 +21,12 @@ class _HomeState extends State<Home>{
 
   int _selectedTab = 0;
   final _pageOptions = [
-    PhotoPage(),
+    Map(),
+    //PhotoPage(),
     Community(),
     Leaderboard(),
-    Profile(),
+    PhotoPage(),
+    //Profile(),
   ];
 
   @override

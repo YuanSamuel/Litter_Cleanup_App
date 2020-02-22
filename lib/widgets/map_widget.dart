@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:env_app/models/pin_data.dart';
+import 'package:env_app/utilities/constants.dart';
 import 'package:env_app/utilities/theme.dart';
 import 'package:env_app/widgets/marker_info.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:env_app/screens/location_accepted.dart';
+import 'package:env_app/screens/camera.dart';
 
 class Map extends StatefulWidget {
   @override
@@ -24,12 +27,13 @@ class _MapState extends State<Map> {
 
   MapType _currentMapType = MapType.normal;
 
-  double _pinPillPosition = -500;
+  double _pinPillPosition = -800;
+  double _pinPillPosition2 = -800;
 
   PinData _currentPinData = PinData(
       pinPath: '',
       avatarPath: '',
-      location: LatLng(0, 0),
+      location: LatLng(31.553896, -97.119940),
       locationName: '',
       labelColor: Colors.grey);
 
@@ -68,7 +72,7 @@ class _MapState extends State<Map> {
         showToast('Unknown');
         break;
       case GeolocationStatus.granted:
-        showToast('Accesss Granted');
+        showToast('Access Granted');
         _getCurrentLocation();
     }
   }
@@ -135,7 +139,8 @@ class _MapState extends State<Map> {
       tiltGesturesEnabled: false,
       onTap: (LatLng location) {
         setState(() {
-          _pinPillPosition = -500;
+          _pinPillPosition = -800;
+          _pinPillPosition2 = -800;
         });
       },
     );
@@ -158,13 +163,17 @@ class _MapState extends State<Map> {
     });
   }
 
-  void _onAddPinButtonPressed() {
-    _sourcePinInfo = PinData(
-        pinPath: 'assets/pin.png',
-        locationName: "My Location",
-        location: LatLng(position.latitude, position.longitude),
-        avatarPath: "assets/driver.jpg",
-        labelColor: Colors.blue);
+  _onAddPinButtonPressed() {
+    setState(() {
+      _pinPillPosition2 = 0;
+      _sourcePinInfo = PinData(
+          pinPath: 'assets/pin.png',
+          locationName: "My Location",
+          location: LatLng(position.latitude, position.longitude),
+          avatarPath: "assets/driver.jpg",
+          labelColor: Colors.blue);
+    });
+
   }
 
   @override
@@ -181,8 +190,8 @@ class _MapState extends State<Map> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.all(20),
-                  height: 350,
+                  margin: EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
+                  height: 500,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -206,15 +215,49 @@ class _MapState extends State<Map> {
                 ),
               ),
             ),
-              Padding(
-              padding: EdgeInsets.all(16.0),
+
+            AnimatedPositioned(
+              bottom: _pinPillPosition2,
+              right: 0,
+              left: 0,
+              duration: Duration(milliseconds: 200),
               child: Align(
-              alignment: Alignment.topRight,
-              child: Column(
-              children: <Widget>[
-              button(_onMapTypeButtonPressed, Icons.map),
-              SizedBox(height: 16.0,),
-              button(_onAddPinButtonPressed, Icons.add_location),
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  height: 500,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset.zero,
+                          color: Colors.grey.withOpacity(0.5),
+                        )
+                      ]),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildAvatar(),
+                      _buildPinCreate(),
+                      //new MarkerInfo(_currentPinData),
+                      _buildMarkerType()
+                    ],
+                  ),
+                ),
+              ),
+            ),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                child: Column(
+                children: <Widget>[
+                    button(_onMapTypeButtonPressed, Icons.map),
+                    SizedBox(height: 16.0,),
+                    button(_onAddPinButtonPressed, Icons.add_location),
 
               ],
               ),
@@ -249,8 +292,7 @@ class _MapState extends State<Map> {
       )
     );
   }
-
-
+  
   Widget _buildLocationInfo() {
     return Expanded(
       child: Container(
@@ -259,21 +301,71 @@ class _MapState extends State<Map> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              _currentPinData.locationName,
-              style: CustomAppTheme().data.textTheme.subtitle,
+            Image(image: AssetImage('assets/messy1.JPG'),),
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: Text(
+                'Baylor University',
+                style: medBlackText,
+              ),
             ),
-            Text(
-              'Latitude : ${_currentPinData.location.latitude}',
-              style: CustomAppTheme().data.textTheme.display1,
+            Padding(
+              padding: EdgeInsets.all(5.0),
+                child: Text(
+                  'Table is messy, needs some help cleaning. Could require 3 - 4 people',
+                  style: smallBlackText,
+              ),
             ),
-            Text(
-              'Longitude : ${_currentPinData.location.longitude}',
-              style: CustomAppTheme().data.textTheme.display1,
-            )
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: Text(
+                'WacodeHacksAdmin',
+                style: smallGreyText,
+              ),
+            ),
+            RaisedButton(
+              child: Text('Accept Challenge'),
+              onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> LocationAccepted())),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPinCreate(){
+    //_pinPillPosition2 = 0;
+    return Expanded(
+        child: Container(
+        margin: EdgeInsets.only(left: 20),
+        child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+              Image(image: AssetImage('assets/messy1.JPG'),),
+                PhotoPage(),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    //decoration: kBoxDecorationStyle,
+                    height: 60.0,
+                    child: TextField(
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontFamily: 'OpenSans',
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(top: 14.0),
+                        hintText: 'Comments',
+                        hintStyle: kHintTextStyleBlack,
+                      ),
+                    )
+                ),
+              RaisedButton(
+              child: Text('Submit'),
+              ),
+          ],
+          ),
+        ),
     );
   }
 
@@ -291,71 +383,5 @@ class _MapState extends State<Map> {
 }
 
 
-  /*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 11.0,
-            ),
-              mapType: _currentMapType,
-              markers: _markers,
-              onCameraMove: _onCameraMove,
-            ),
-            
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Column(
-                  children: <Widget>[
-                    button(_onMapTypeButtonPressed, Icons.map, "mapChanger"),
-                    SizedBox(height: 16.0,),
-                    button(_createMarker, Icons.add_location, "markerAdder"),
 
-                  ],
-                ),
-              ),
-            )
-            
-          ],
-          
-        ),
-
-
-    );
-  }
-
-
-  Future<String> initPlatform() async {
-    Map<String, double> myCurrentLocation;
-    try {
-      myCurrentLocation = await location.getLocation();
-    } on
-    PlatformException catch (e) {
-      if (e.code == "PERMISSION_DENIED") {
-        error = "PERMISSION_DENIED";
-      }
-      else if (e.code == "PERMISSION_DENIED_NEVER_ASK") {
-        error = "Never Ask";
-      }
-      myCurrentLocation = null;
-    }
-    setState(() {
-      currentLocation = myCurrentLocation;
-    });
-    final coordinates = Coordinates(currentLocation['latitude'], currentLocation['longitude']);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
-
-    cityText = first.adminArea;
-    return cityText;
-  }
-}*/
 

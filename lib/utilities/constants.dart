@@ -5,6 +5,29 @@ final kHintTextStyle = TextStyle(
   fontFamily: 'OpenSans',
 );
 
+final kHintTextStyleBlack = TextStyle(
+  color: Colors.black,
+  fontFamily: 'OpenSans',
+);
+
+final medBlackText = TextStyle(
+  color: Colors.black,
+  fontSize: 25.0,
+  fontFamily: 'OpenSans',
+);
+
+final smallBlackText = TextStyle(
+  color: Colors.black,
+  fontSize: 15.0,
+  fontFamily: 'OpenSans',
+);
+
+final smallGreyText = TextStyle(
+  color: Colors.grey,
+  fontSize: 12.0,
+  fontFamily: 'OpenSans',
+);
+
 final kLabelStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
