@@ -1,6 +1,7 @@
+import 'package:env_app/screens/login.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String pwdValidator(String value) {
     if (value.length < 8) {
-      return 'Password must be longer than 7 characters';
+      return 'Password must be longer than 8 characters';
     } else {
       return null;
     }
@@ -68,26 +69,32 @@ class _RegisterPageState extends State<RegisterPage> {
                         validator: pwdValidator,
                       ),
                       RaisedButton(
-                          child: Text("Register"),
-                          color: Theme.of(context).primaryColor,
-                          textColor: Colors.white,
-                          onPressed: () {
-                            if (_registerFormKey.currentState.validate()) {
-                              print("SET0");
-                              FirebaseAuth.instance.createUserWithEmailAndPassword(
-                                email: emailInputController.text,
-                                password: pwdInputController.text,).then((currentUser)
-                              {
-                                Firestore.instance.collection("users").document(currentUser.user.uid)
-                                    .setData({
-                                  "uid": currentUser.user.uid,
-                                  "email": emailInputController.text,
-                                });
-                                emailInputController.clear();
-                                pwdInputController.clear();
-                                print("SET1");
-                              });
-                            }}
+                        child: Text("Register"),
+                        color: Theme.of(context).primaryColor,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          if (_registerFormKey.currentState.validate()) {
+                              FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                  email: emailInputController.text,
+                                  password: pwdInputController.text)
+                                  .then((currentUser) => Firestore.instance
+                                  .collection("users")
+                                  .document(currentUser.user.uid)
+                                  .setData({
+                                "uid": currentUser.user.uid,
+                                "email": emailInputController.text,
+                              })
+                                  .then((result) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                                );
+                              })
+                                  .catchError((err) => print(err)))
+                                  .catchError((err) => print(err));
+                            }
+                        },
                       ),
                       Text("Already have an account?"),
                       FlatButton(
