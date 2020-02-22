@@ -19,9 +19,11 @@ class _HomeState extends State<Home>{
           backgroundColor: Colors.white,
           elevation: 0.0,
           automaticallyImplyLeading: false,
-          leading: IconButton(icon: Icon(Icons.menu, color:Colors.black), onPressed: () => _scaffoldKey.currentState.openDrawer(),),
+          leading: IconButton(icon: Icon(Icons.menu, color: Colors.black),
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.person_outline, color:Colors.black), onPressed: (){},),
+            IconButton(icon: Icon(Icons.person_outline, color: Colors.black),
+              onPressed: () {},),
           ],
         ),
         /*
@@ -44,9 +46,13 @@ class _HomeState extends State<Home>{
                     padding: const EdgeInsets.only(left: 8.0),
                     child: RichText(
                       text: TextSpan(children: [
-                        TextSpan(text: 'Hello, ', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Colors.pinkAccent)),
-                        TextSpan(text: 'what are you\nlooking for')
-                      ], style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.black)),
+                        TextSpan(text: 'Flutter App, ', style: TextStyle(fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.pinkAccent)),
+                      ],
+                          style: TextStyle(fontSize: 32,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black)),
                     ),
                   ),
                 ),
@@ -54,7 +60,6 @@ class _HomeState extends State<Home>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-
                   ],
                 ),
 
@@ -63,11 +68,14 @@ class _HomeState extends State<Home>{
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left:8.0),
-                      child: Text('Best Experiences', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text('Lorem Ipsum', style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w500),),
                     ),
 
-                    IconButton(icon: Icon(Icons.more_horiz, color: Colors.black,), onPressed: (){},),
+                    IconButton(
+                      icon: Icon(Icons.more_horiz, color: Colors.black,),
+                      onPressed: () {},),
                   ],
                 ),
 
@@ -90,9 +98,6 @@ class _HomeState extends State<Home>{
               ),*/
 
 
-
-
-
               ],
             ),
           ),
@@ -100,3 +105,4 @@ class _HomeState extends State<Home>{
 
     );
   }
+}
