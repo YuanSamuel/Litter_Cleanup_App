@@ -1,3 +1,5 @@
+import 'package:env_app/screens/camera.dart';
+import 'package:env_app/screens/vote.dart';
 import 'package:flutter/material.dart';
 import 'package:env_app/screens/home.dart';
 import 'package:env_app/screens/login.dart';

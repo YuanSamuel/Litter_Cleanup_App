@@ -1,3 +1,4 @@
+import 'package:env_app/screens/camera.dart';
 import 'package:env_app/screens/community.dart';
 import 'package:flutter/material.dart';
 import 'package:env_app/widgets/home_drawer.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home>{
 
   int _selectedTab = 0;
   final _pageOptions = [
-    Map(),
+    PhotoPage(),
     Community(),
     Leaderboard(),
     Profile(),
