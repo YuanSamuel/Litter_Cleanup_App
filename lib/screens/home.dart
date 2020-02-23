@@ -24,6 +24,15 @@ class Home extends StatefulWidget{
 class _HomeState extends State<Home>{
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  int _selectedTab = 0;
+  final _pageOptions = [
+    Map(),
+    //PhotoPage(),
+    Community(),
+    Leaderboard(),
+    PhotoPage(),
+    //Profile(),
+  ];
   void initState() {
     super.initState();
     _pageOptions = [

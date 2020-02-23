@@ -23,24 +23,27 @@ class PhotoPage extends StatefulWidget {
 class _PhotoPageState extends State<PhotoPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    // TODO: implement build
+    return Container(
+      height: 20,
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.camera),
+            onPressed: getImageFromCamera,
+          ),
+          IconButton(
+            icon: Icon(Icons.photo),
+          )
+        ],
+      ),
+      /*
       body: Column(
         children: <Widget>[
           Center(
             child: FlatButton(
               child: Text("Take Picture"),
               onPressed: getImageFromCamera,
-            ),
-          ),
-          Center(
-            child: FlatButton(
-              child: Text("Update"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FixPage()),
-                );
-              },
             ),
           )
         ],
