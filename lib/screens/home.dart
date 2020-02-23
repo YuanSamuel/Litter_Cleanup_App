@@ -1,12 +1,10 @@
 import 'package:env_app/screens/camera.dart';
-import 'package:env_app/screens/community.dart';
 import 'package:env_app/screens/voting.dart';
 import 'package:flutter/material.dart';
 import 'package:env_app/widgets/home_drawer.dart';
 import 'package:env_app/screens/login.dart';
 import 'package:env_app/widgets/map_widget.dart';
 import 'package:env_app/screens/community.dart';
-import 'package:env_app/screens/profile.dart';
 import 'package:env_app/screens/leaderboard.dart';
 
 import 'login.dart';
@@ -28,8 +26,8 @@ class _HomeState extends State<Home>{
   int _selectedTab = 0;
   final _pageOptions = [
     Map(),
-    //PhotoPage(),
     Community(),
+    //PhotoPage(),
     Leaderboard(),
     Voting(),
     //Profile(),

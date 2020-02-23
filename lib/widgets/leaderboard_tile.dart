@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:env_app/models/person.dart';
+
+
 
 class LeaderboardTile extends StatelessWidget {
   final int rank;

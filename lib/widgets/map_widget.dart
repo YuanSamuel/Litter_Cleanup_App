@@ -301,10 +301,6 @@ class _MapState extends State<Map> {
                     button(_onMapTypeButtonPressed, Icons.map),
                     SizedBox(height: 16.0,),
                     button(_onAddPinButtonPressed, Icons.add_location),
-                  SizedBox(height: 16.0,),
-                  button(_zoomIn, Icons.zoom_in),
-                  SizedBox(height: 16.0,),
-                  button(_zoomOut, Icons.zoom_out),
 
               ],
               ),
