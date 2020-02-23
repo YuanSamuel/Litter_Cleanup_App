@@ -7,7 +7,7 @@ class MainDrawer extends StatelessWidget{
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.65,
       child: Container(
-        color: Colors.yellow.shade200,
+        color: Colors.grey.shade200,
         child: Column(
           children: <Widget>[
             SizedBox(
@@ -47,6 +47,16 @@ class MainDrawer extends StatelessWidget{
               title: Text('Settings'),
               onTap: () {},
             ),
+            ListTile(
+              leading: Icon(Icons.people),
+              title: Text('Friends'),
+              onTap: (){},
+            ),
+            ListTile(
+              leading: Icon(Icons.arrow_back),
+              title: Text('Log Out'),
+              onTap: (){},
+            )
 
           ],
         ),
