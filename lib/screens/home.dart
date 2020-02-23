@@ -1,5 +1,6 @@
 import 'package:env_app/screens/camera.dart';
 import 'package:env_app/screens/community.dart';
+import 'package:env_app/screens/voting.dart';
 import 'package:flutter/material.dart';
 import 'package:env_app/widgets/home_drawer.dart';
 import 'package:env_app/screens/login.dart';
@@ -30,21 +31,10 @@ class _HomeState extends State<Home>{
     //PhotoPage(),
     Community(),
     Leaderboard(),
-    PhotoPage(),
+    Voting(),
     //Profile(),
   ];
-  void initState() {
-    super.initState();
-    _pageOptions = [
-      PhotoPage(uid: widget.uid,),
-      Community(uid: widget.uid,),
-      Leaderboard(),
-      Profile(),
-    ];
-  }
 
-  int _selectedTab = 0;
-  var _pageOptions;
 
   @override
   Widget build(BuildContext context) {

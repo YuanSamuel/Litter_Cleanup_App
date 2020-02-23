@@ -27,8 +27,16 @@ class _MapState extends State<Map> {
 
   MapType _currentMapType = MapType.normal;
 
+  Set<Marker> markers = {};
+
   double _pinPillPosition = -800;
   double _pinPillPosition2 = -800;
+
+  double zoomAmt = 12.0;
+
+  List<LatLng> samplePositions = [LatLng(35, -100), LatLng(0, 0), LatLng(10, -80)];
+
+  int markerCount = 0;
 
   PinData _currentPinData = PinData(
       pinPath: '',
@@ -85,6 +93,11 @@ class _MapState extends State<Map> {
     });
   }
 
+  /*
+   _getPosition() async{
+    Position current = await Geolocator().getCurrentPosition();
+  }*/
+
   void _setStyle(GoogleMapController controller) async {
     String value = await DefaultAssetBundle.of(context)
         .loadString('assets/map_style.json');
@@ -92,10 +105,11 @@ class _MapState extends State<Map> {
     controller.setMapStyle(value);
   }
 
-  Set<Marker> _createMarker() {
-    return <Marker>[
-      Marker(
-          markerId: MarkerId('home'),
+  void _createMarker() {
+    setState(() {
+      markerCount++;
+      markers.add(Marker(
+          markerId: MarkerId(markerCount.toString()),
           position: LatLng(position.latitude, position.longitude),
           icon: _sourceIcon,
           onTap: () {
@@ -103,9 +117,29 @@ class _MapState extends State<Map> {
               _currentPinData = _sourcePinInfo;
               _pinPillPosition = 0;
             });
-          })
-    ].toSet();
+          }));
+    });
   }
+
+  void _generateSampleMarkers(){
+    for(LatLng pos in samplePositions){
+      setState(() {
+        markerCount++;
+        markers.add(Marker(
+            markerId: MarkerId(markerCount.toString()),
+            position: LatLng(pos.latitude, pos.longitude),
+            icon: _sourceIcon,
+            onTap: () {
+              setState(() {
+                _currentPinData = _sourcePinInfo;
+                _pinPillPosition = 0;
+              });
+            }));
+      });
+      print(markerCount);
+    }
+  }
+
 
   void showToast(message) {
     Fluttertoast.showToast(
@@ -127,10 +161,11 @@ class _MapState extends State<Map> {
 
   Widget _mapWidget() {
     return GoogleMap(
+      zoomGesturesEnabled: true,
       mapType: MapType.normal,
-      markers: _createMarker(),
+      markers: markers,
       initialCameraPosition: CameraPosition(
-          target: LatLng(position.latitude, position.longitude), zoom: 12.0),
+          target: LatLng(position.latitude, position.longitude), zoom: zoomAmt),
       onMapCreated: (GoogleMapController controller) {
         _controller = controller;
         _setStyle(controller);
@@ -165,6 +200,7 @@ class _MapState extends State<Map> {
 
   _onAddPinButtonPressed() {
     setState(() {
+      _getCurrentLocation();
       _pinPillPosition2 = 0;
       _sourcePinInfo = PinData(
           pinPath: 'assets/pin.png',
@@ -173,7 +209,14 @@ class _MapState extends State<Map> {
           avatarPath: "assets/driver.jpg",
           labelColor: Colors.blue);
     });
+  }
 
+  _onSubmitMarker(){
+    setState(() {
+      _getCurrentLocation();
+      _pinPillPosition2 = -800;
+      _createMarker();
+    });
   }
 
   @override
@@ -206,7 +249,7 @@ class _MapState extends State<Map> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _buildAvatar(),
+                      //_buildAvatar(),
                       _buildLocationInfo(),
                       //new MarkerInfo(_currentPinData),
                       _buildMarkerType()
@@ -258,6 +301,10 @@ class _MapState extends State<Map> {
                     button(_onMapTypeButtonPressed, Icons.map),
                     SizedBox(height: 16.0,),
                     button(_onAddPinButtonPressed, Icons.add_location),
+                  SizedBox(height: 16.0,),
+                  button(_zoomIn, Icons.zoom_in),
+                  SizedBox(height: 16.0,),
+                  button(_zoomOut, Icons.zoom_out),
 
               ],
               ),
@@ -266,6 +313,20 @@ class _MapState extends State<Map> {
           ],
         ));
   }
+
+  void _zoomIn(){
+    setState(() {
+      zoomAmt++;
+      CameraPosition(zoom: zoomAmt);
+    });
+  }
+  void _zoomOut(){
+    setState(() {
+      zoomAmt--;
+      CameraPosition(zoom: zoomAmt);
+    });
+  }
+
 
   Widget _buildAvatar() {
     return Container(
@@ -292,16 +353,20 @@ class _MapState extends State<Map> {
       )
     );
   }
-  
+
   Widget _buildLocationInfo() {
     return Expanded(
       child: Container(
         margin: EdgeInsets.only(left: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(image: AssetImage('assets/messy1.JPG'),),
+            SizedBox(
+              height: 200,
+              child: Image(image: AssetImage('assets/messy1.JPG'),),
+            ),
+
             Padding(
               padding: EdgeInsets.all(5.0),
               child: Text(
@@ -312,14 +377,14 @@ class _MapState extends State<Map> {
             Padding(
               padding: EdgeInsets.all(5.0),
                 child: Text(
-                  'Table is messy, needs some help cleaning. Could require 3 - 4 people',
+                  'Table is messy, needs some help cleaning. Requires 3 - 4 people',
                   style: smallBlackText,
               ),
             ),
             Padding(
               padding: EdgeInsets.all(5.0),
               child: Text(
-                'WacodeHacksAdmin',
+                'WacodeHackAdmin',
                 style: smallGreyText,
               ),
             ),
@@ -362,6 +427,7 @@ class _MapState extends State<Map> {
                 ),
               RaisedButton(
               child: Text('Submit'),
+                onPressed: _onSubmitMarker,
               ),
           ],
           ),

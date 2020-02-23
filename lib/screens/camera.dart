@@ -30,58 +30,13 @@ class _PhotoPageState extends State<PhotoPage> {
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.camera),
-            onPressed: getImageFromCamera,
+            //onPressed: getImageFromCamera,
           ),
           IconButton(
             icon: Icon(Icons.photo),
           )
         ],
       ),
-      /*
-      body: Column(
-        children: <Widget>[
-          Center(
-            child: FlatButton(
-              child: Text("Take Picture"),
-              onPressed: getImageFromCamera,
-            ),
-          )
-        ],
-      ),
     );
-  }
-
-  Future getImageFromCamera() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    if (image != null) {
-      await uploadFile(image);
-      int points = 0;
-      DocumentSnapshot snap = await Firestore.instance.collection('users').document(widget.uid).get();
-      print(widget.uid);
-      if (!snap.data.containsKey('points')) {
-        snap.data.putIfAbsent('points', () {
-          return 0;
-        });
-      }
-      else {
-        points = snap['points'];
-      }
-      Firestore.instance.collection('users').document(widget.uid).updateData({
-        'points': points + 5
-      });
-    }
-  }
-
-  Future uploadFile(File image) async {
-    StorageReference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('photos/${basename(image.path)}');
-    StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
-    Firestore.instance.collection('entries').add({
-      'initial': await storageReference.getDownloadURL(),
-      'votes': []
-    });
-    print('set');
   }
 }
