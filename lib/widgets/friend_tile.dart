@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 
 class LeaderboardTile extends StatelessWidget {
-  final int rank;
+
   final String name;
   final String picture;
   final int points;
 
   LeaderboardTile(
-      {@required this.rank, @required this.name, @required this.picture, @required this.points});
+      {@required @required this.name, @required this.picture, @required this.points});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,22 +33,15 @@ class LeaderboardTile extends StatelessWidget {
                     color: Colors.black87
                 ),
               ),
-              Text('Rank '+rank.toString(),
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87
 
-                ),
-              ),
             ],
           ),
           Container (
             child: Text(points.toString()+' points',
               style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87
               ),
             ),
           )

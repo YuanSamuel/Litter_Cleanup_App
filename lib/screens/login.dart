@@ -316,11 +316,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'App Name',
+                          'Green Quest',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontFamily: 'OpenSans',
-                            fontSize: 30.0,
+                            fontSize: 50.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

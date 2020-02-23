@@ -1,3 +1,4 @@
+import 'package:env_app/widgets/friends_list.dart';
 import 'package:flutter/material.dart';
 import 'package:env_app/widgets/friends_categories.dart';
 
@@ -14,6 +15,7 @@ class _Community extends State<Community>{
       child: Column(
         children: <Widget>[
           FriendsCategories(),
+          FriendsList(),
         ],
 
       ),
