@@ -25,13 +25,31 @@ class LeaderboardTile extends StatelessWidget {
           Column(
             children: <Widget>[
 
-              Text(name.toString()),
+              Text(name.toString(),
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87
+                ),
+              ),
+              Text('Rank '+rank.toString(),
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87
 
-              Text(rank.toString())
+                ),
+              ),
             ],
           ),
           Container (
-            child: Text(points.toString()+' points'),
+            child: Text(points.toString()+' points',
+              style: TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87
+              ),
+            ),
           )
         ],
       ),

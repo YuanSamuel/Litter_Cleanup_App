@@ -25,14 +25,15 @@ class _HomeState extends State<Home>{
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int _selectedTab = 0;
-  final _pageOptions = [
+   var _pageOptions = [
     Map(),
     //PhotoPage(),
     Community(),
     Leaderboard(),
     PhotoPage(),
-    //Profile(),
+    Profile(),
   ];
+
   void initState() {
     super.initState();
     _pageOptions = [
@@ -43,8 +44,7 @@ class _HomeState extends State<Home>{
     ];
   }
 
-  int _selectedTab = 0;
-  var _pageOptions;
+
 
   @override
   Widget build(BuildContext context) {
