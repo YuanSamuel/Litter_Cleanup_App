@@ -5,7 +5,7 @@ class Leaderboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     camera.PhotoPage p = new camera.PhotoPage();
-    p.createState().getImageFromCamera()
+    //p.createState().getImageFromCamera()
     return Scaffold(
       body: Text(
           'Leaderboard'
